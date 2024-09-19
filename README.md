@@ -26,6 +26,7 @@ Graphics (3D rotations)
 Telecommunications (modulation and demodulation)
 
 CORDIC Algorithm Overview
+
 The CORDIC algorithm works by iteratively rotating a vector toward a desired angle through a series of predetermined shifts and additions. It eliminates the need for multiplication by relying on binary shifts, making it highly efficient for hardware implementations.
 
 Key Operation Flow:
