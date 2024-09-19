@@ -1,35 +1,32 @@
 # Cordic-Algorithm
-This repository contains the Verilog implementation of the CORDIC (Coordinate Rotation Digital Computer) Algorithm for efficiently calculating trigonometric functions such as sine, cosine.
 
-Project Overview
-This project demonstrates the hardware design of the CORDIC algorithm for performing sine and cosine calculations using iterative rotations. The Verilog-based design is ideal for applications requiring real-time calculations of trigonometric functions in low-power and resource-constrained environments. The implementation uses fixed-point arithmetic to enhance performance in FPGA or ASIC designs.
+The CORDIC (Coordinate Rotation Digital Computer) algorithm is a highly efficient method for computing trigonometric functions, widely used in various digital signal processing
+applications. This report presents the implementation of the CORDIC algorithm using Verilog HDL, targeting FPGA platforms. The implementation focuses on calculating sine and cosine functions, leveraging the iterative nature of the CORDIC algorithm to achieve accurate results with minimal resource utilization. The design was synthesized and simulated to evaluate performance metrics such as accuracy, speed, and hardware resource usage. The results demonstrate that the CORDIC algorithm provides high precision with low latency, making it suitable for real-time applications. Additionally, the resource efficiency of the implementation allows it to be used in systems with limited hardware resources. The report also discusses potential optimizations and future extensions, including the implementation of other mathematical functions and integration into more complex systems. The findings suggest that the Verilog HDL implementation of the CORDIC algorithm is a robust and versatile solution for hardware-based trigonometric computation, with broad applicability in the fields of digital signal processing, communications, and computer graphics.
 
-Key Features
-Efficient Trigonometric Function Calculation: Sine and cosine values are computed using the iterative CORDIC algorithm.
-Fixed-point Arithmetic: The implementation leverages fixed-point math for hardware optimization.
-Scalable Precision: The number of iterations can be adjusted to achieve desired precision for the output values.
-Parameterizable: Design parameters such as the bit-width of inputs and the number of iterations can be customized.
-FPGA/ASIC Friendly: This Verilog implementation is optimized for hardware synthesis on FPGA or ASIC platforms.
-Contents
-cordic.v: The Verilog code for the CORDIC algorithm.
-cordic_tb.v: The testbench for simulating and verifying the functionality of the CORDIC implementation.
-README.md: Overview and instructions on how to use the implementation.
-LICENSE: Licensing information for the project.
-How the CORDIC Algorithm Works
-The CORDIC algorithm iteratively rotates a vector towards the desired angle by a sequence of predetermined rotations. These rotations are based on binary shifts, making the algorithm highly efficient in hardware implementations, as it avoids multipliers and uses only addition, subtraction, and bit-shifting operations.
 
-Applications
-Digital signal processing (DSP)
-Embedded systems
-Robotics (angle calculations)
-Graphics (3D rotations)
-Telecommunications (modulation and demodulation)
+Methodology of CORDIC Algorithm in Verilog
+Initialization Stage:
 
-CORDIC Algorithm Overview
+Start by defining the input data, which includes angle, sine, and cosine values. Inputs are typically represented in fixed-point format to ensure precision.
+Initialize the registers for storing the intermediate values of sine, cosine, and the current angle. Set the iteration index to zero, and define the number of iterations required for convergence based on the desired precision.
 
-The CORDIC algorithm works by iteratively rotating a vector toward a desired angle through a series of predetermined shifts and additions. It eliminates the need for multiplication by relying on binary shifts, making it highly efficient for hardware implementations.
+Iteration Process:
 
-Key Operation Flow:
-Initialize vector coordinates.
-Apply iterative rotations based on the desired angle.
-Use shift-and-add operations to compute trigonometric results.
+The algorithm iteratively rotates the input angle by either adding or subtracting pre-defined angles. These rotations are done using a series of bit-shift operations, representing division by powers of two. For each iteration, the algorithm decides whether to rotate clockwise or counterclockwise based on the current angle. Update the sine and cosine values after each rotation based on the direction and magnitude of the angle.
+
+Control Logic:
+
+A state machine is implemented to control the flow of the algorithm, ensuring that each step of the iteration is executed in sequence. The state machine manages the computation of intermediate results and determines when the algorithm has converged to the desired precision.
+
+Data Path Design:
+
+The data path includes shift-adders for implementing the bit-shift operations required in each iteration. Separate blocks for sine and cosine calculations are designed, which continuously update during each iteration based on the control signals from the state machine.
+
+Termination Condition:
+
+The algorithm terminates after a predefined number of iterations or when the angle has been reduced below a threshold, indicating convergence. At the end of the iterations, the sine and cosine values represent the final computed values for the given input angle.
+
+Output Stage:
+
+Once the iterations are complete, the final sine and cosine values are available as outputs. These results are stored in output registers, which can be accessed by other parts of the system or external interfaces.
+
